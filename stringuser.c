@@ -1,6 +1,6 @@
 #include "shell.h"
 
-char *my_strtok(char *str, const char *delim)
+char *_strtok(char *str, const char *delim)
 {
 	static char *next_token = NULL;
 	if (str != NULL)
@@ -31,14 +31,14 @@ char *my_strtok(char *str, const char *delim)
 	return token_start;
 }
 
-char **split_string(char *str, const char *delim, int *num_tokens)
+char **_split_string(char *str, const char *delim, int *num_tokens)
 {
 	// Allocate an array of pointers to char
 	char **tokens = NULL;
 	int tokens_size = 0;
 
 	// Split the string by the delimiter
-	char *token = strtok(str, delim);
+	char *token = _strtok(str, delim);
 	while (token != NULL)
 	{
 		// Add the token to the array
