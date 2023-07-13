@@ -31,7 +31,7 @@ char *_strtok(char *str, const char *delim)
 	return token_start;
 }
 
-char **_split_string(char *str, const char *delim, int *num_tokens)
+char **_split_string(char *str, const char *delim, size_t *num_tokens)
 {
 	// Allocate an array of pointers to char
 	char **tokens = NULL;

@@ -6,8 +6,7 @@
 #include <unistd.h>
 #include <sys/wait.h>
 
-
 /* stringuser */
-char **split_string(char *str, const char *delim, int *num_tokens);
-char *my_strtok(char *str, const char *delim);
+char **_split_string(char *str, const char *delim, size_t *num_tokens);
+char *_strtok(char *str, const char *delim);
 #endif

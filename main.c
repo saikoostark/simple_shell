@@ -12,11 +12,12 @@ int main(int argc, char const *argv[], char *envp[])
 
 		printf("$ ");
 		getline(&str, &size, stdin);
+		char **args = _split_string(str, " ", &size);
 		pid = fork();
 
 		if (pid == 0)
 		{
-			execve(str, NULL, envp);
+			execve(args[0], args, envp);
 		}
 		else
 		{
