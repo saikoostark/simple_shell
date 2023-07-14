@@ -5,6 +5,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <sys/wait.h>
+#include <signal.h>
 
 /* stringuser */
 char **_split_string(char *str, char *delim, size_t *count);
