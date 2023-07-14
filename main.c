@@ -1,19 +1,24 @@
 #include "shell.h"
 
-int pid;
+char **envs = NULL;
+
 void handleCtrlC(int sig_num)
 {
 	(void)sig_num;
 	exit(0);
 }
 
-int main(int argc, char const *argv[])
+int main(int argc, char const *argv[], char **envp)
 {
 
-	char *str = NULL;
+	char *str = NULL, *path;
 	size_t size;
 	char **args;
 	ssize_t reads;
+	int pid;
+	/* size_t i; */
+
+	envs = envp;
 
 	signal(SIGINT, handleCtrlC);
 	if (argc == 2)
@@ -21,6 +26,18 @@ int main(int argc, char const *argv[])
 
 	while (1)
 	{
+
+		/* if (args)
+		{
+			for (i = 0; args[i]; i++)
+			{
+				printf("try to free %s\n", args[i]);
+				free(args[i]);
+			}
+
+			printf("try to free the whole args\n");
+			free(args);
+		} */
 
 		printf("$ ");
 		reads = getline(&str, &size, stdin);
@@ -36,12 +53,20 @@ int main(int argc, char const *argv[])
 
 		args = _split_string(str, " ", &size);
 		_remove_comment(args);
+		path = strdup(args[0]);
+		path = _isExist(path);
+
+		if (!path)
+		{
+			printf("%s: No such file or directory\n", args[0]);
+			continue;
+		}
 
 		pid = fork();
 
 		if (pid == 0)
 		{
-			execvp(args[0], args);
+			execve(path, args, envs);
 			printf("%s: No such file or directory\n", args[0]);
 			return (1);
 		}
