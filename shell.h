@@ -7,6 +7,6 @@
 #include <sys/wait.h>
 
 /* stringuser */
-char **_split_string(char *str, const char *delim, size_t *num_tokens);
-char *_strtok(char *str, const char *delim);
+char **_split_string(char *str, char *delim, size_t *count);
+void _remove_comment(char **strs);
 #endif
