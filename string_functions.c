@@ -21,7 +21,7 @@ char **_split_string(char *str, char *delimiter, size_t *count)
 	if (splitArray == NULL)
 	{
 		printf("Memory allocation failed.\n");
-		return NULL;
+		return (NULL);
 	}
 
 	token = strtok((char *)str, delimiter);
@@ -35,7 +35,7 @@ char **_split_string(char *str, char *delimiter, size_t *count)
 	free(str);
 	*count = delimiterCount + 1;
 	splitArray[*count] = NULL;
-	return splitArray;
+	return (splitArray);
 }
 
 char *_concat_all(char *name, char *sep, char *value)
@@ -92,4 +92,3 @@ void _remove_comment(char **strs)
 	}
 	/* printf("done removing\n"); */
 }
-
