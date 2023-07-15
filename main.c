@@ -66,6 +66,11 @@ int main(int argc, char const *argv[], char **envp)
 		if (strlen(str) == 0)
 			continue;
 		args = _argsHandler(&str, &size);
+		if (str != NULL)
+		{
+			free(str);
+			str = NULL;
+		}
 		builtin = checkbuild(args);
 		if (builtin != NULL)
 		{
@@ -91,12 +96,6 @@ int main(int argc, char const *argv[], char **envp)
 		{
 			free(path);
 			path = NULL;
-		}
-
-		if (str != NULL)
-		{
-			free(str);
-			str = NULL;
 		}
 
 		if (args != NULL)
