@@ -16,6 +16,8 @@ int main(int argc, char const *argv[], char **envp)
 	char **args;
 	ssize_t reads;
 	int pid;
+	void (*builtin)(char **);
+
 	/* size_t i; */
 
 	envs = envp;
@@ -53,6 +55,14 @@ int main(int argc, char const *argv[], char **envp)
 
 		args = _split_string(str, " ", &size);
 		_remove_comment(args);
+
+		builtin = checkbuild(args);
+		if (builtin != NULL)
+		{
+			builtin(args);
+			continue;
+		}
+
 		path = strdup(args[0]);
 		path = _isExist(path);
 
