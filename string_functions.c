@@ -17,7 +17,7 @@ char **_split_string(char *str, char *delimiter, size_t *count)
 		pos += delimiterLen;
 	}
 
-	splitArray = (char **)malloc((delimiterCount + 1) * sizeof(char *));
+	splitArray = (char **)malloc((delimiterCount + 2) * sizeof(char *));
 	if (splitArray == NULL)
 	{
 		printf("Memory allocation failed.\n");
@@ -43,10 +43,10 @@ char *_concat_all(char *name, char *sep, char *value)
 	char *result;
 	int l1, l2, l3, i, k;
 
-	name = strdup(name);
+	/* name = strdup(name);
 	sep = strdup(sep);
 	value = strdup(value);
-
+	*/
 	l1 = strlen(name);
 	l2 = strlen(sep);
 	l3 = strlen(value);
@@ -69,24 +69,25 @@ char *_concat_all(char *name, char *sep, char *value)
 
 	result[k] = '\0';
 
-	free(name);
-	free(sep);
-	free(value);
-
 	return (result);
 }
 
 void _remove_comment(char **strs)
 {
 	size_t i;
-
+	int isComment = 0;
 	for (i = 0; strs[i] != NULL; i++)
 	{
 		/* printf("%s\n", strs[i]); */
-		if (strs[i][0] == '#')
+		if (strs[i][0] == '#' && isComment == 0)
 		{
+			isComment = 1;
+		}
+
+		if (isComment)
+		{
+			free(strs[i]);
 			strs[i] = NULL;
-			break;
 		}
 		/* printf("%lu\n", i); */
 	}

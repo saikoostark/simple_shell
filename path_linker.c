@@ -12,21 +12,21 @@ char *_getenv(const char *name)
 
 	if (!name)
 		return (NULL);
-	for (i = 0; envs[i]; i++)
+	for (i = 0; environ[i]; i++)
 	{
 		j = 0;
-		if (name[j] == envs[i][j])
+		if (name[j] == environ[i][j])
 		{
 			while (name[j])
 			{
-				if (name[j] != envs[i][j])
+				if (name[j] != environ[i][j])
 					break;
 
 				j++;
 			}
 			if (name[j] == '\0')
 			{
-				value = (envs[i] + j + 1);
+				value = (environ[i] + j + 1);
 				return (value);
 			}
 		}
@@ -42,22 +42,51 @@ char *_isExist(char *command)
 	char *fullpath;
 	size_t i;
 
-	paths = _split_string(_getenv("PATH"), ":", &lenpaths);
-
 	if (access(command, F_OK) != -1)
 	{
-		return (command);
+
+		return (strdup(command));
 	}
+
+	paths = _split_string(_getenv("PATH"), ":", &lenpaths);
 
 	for (i = 0; paths[i]; i++)
 	{
-		fullpath = _concat_all(strdup(paths[i]), "/", strdup(command));
+		fullpath = _concat_all(paths[i], "/", command);
 		if (access(fullpath, F_OK) != -1)
 		{
+			if (paths != NULL)
+			{
+				for (i = 0; paths[i]; i++)
+				{
+					if (paths[i] != NULL)
+					{
+						free(paths[i]);
+						paths[i] = NULL;
+					}
+				}
+				free(paths);
+				paths = NULL;
+			}
 			return (fullpath);
 		}
 		free(fullpath);
 	}
+
+	if (paths != NULL)
+	{
+		for (i = 0; paths[i]; i++)
+		{
+			if (paths[i] != NULL)
+			{
+				free(paths[i]);
+				paths[i] = NULL;
+			}
+		}
+		free(paths);
+		paths = NULL;
+	}
+
 	return (NULL);
 }
 

@@ -1,7 +1,7 @@
 #include "shell.h"
 
 /**
- * env - prints the current envsment
+ * env - prints the current environment
  * @argv: array of arguments
  */
 void _env(char **argv)
@@ -9,9 +9,9 @@ void _env(char **argv)
 	int i;
 	(void)argv;
 
-	for (i = 0; envs[i]; i++)
+	for (i = 0; environ[i]; i++)
 	{
-		printf("%s\n", envs[i]);
+		printf("%s\n", environ[i]);
 	}
 }
 
@@ -25,14 +25,14 @@ void _setenv(char **argv)
 		return;
 	}
 
-	for (i = 0; envs[i]; i++)
+	for (i = 0; environ[i]; i++)
 	{
 		j = 0;
-		if (argv[1][j] == envs[i][j])
+		if (argv[1][j] == environ[i][j])
 		{
 			while (argv[1][j])
 			{
-				if (argv[1][j] != envs[i][j])
+				if (argv[1][j] != environ[i][j])
 					break;
 
 				j++;
@@ -42,19 +42,19 @@ void _setenv(char **argv)
 				k = 0;
 				while (argv[2][k])
 				{
-					envs[i][j + 1 + k] = argv[2][k];
+					environ[i][j + 1 + k] = argv[2][k];
 					k++;
 				}
-				envs[i][j + 1 + k] = '\0';
+				environ[i][j + 1 + k] = '\0';
 				return;
 			}
 		}
 	}
-	if (!envs[i])
+	if (!environ[i])
 	{
 
-		envs[i] = _concat_all(argv[1], "=", argv[2]);
-		envs[i + 1] = '\0';
+		environ[i] = _concat_all(argv[1], "=", argv[2]);
+		environ[i + 1] = '\0';
 	}
 }
 
@@ -67,25 +67,25 @@ void _unsetenv(char **argv)
 		perror(_getenv("_"));
 		return;
 	}
-	for (i = 0; envs[i]; i++)
+	for (i = 0; environ[i]; i++)
 	{
 		j = 0;
-		if (argv[1][j] == envs[i][j])
+		if (argv[1][j] == environ[i][j])
 		{
 			while (argv[1][j])
 			{
-				if (argv[1][j] != envs[i][j])
+				if (argv[1][j] != environ[i][j])
 					break;
 
 				j++;
 			}
 			if (argv[1][j] == '\0')
 			{
-				free(envs[i]);
-				envs[i] = envs[i + 1];
-				while (envs[i])
+				free(environ[i]);
+				environ[i] = environ[i + 1];
+				while (environ[i])
 				{
-					envs[i] = envs[i + 1];
+					environ[i] = environ[i + 1];
 					i++;
 				}
 				return;

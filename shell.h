@@ -11,7 +11,7 @@
 #include <sys/stat.h>
 #include <signal.h>
 
-extern char **envs;
+extern char **environ;
 
 typedef struct builtin
 {
@@ -34,5 +34,11 @@ void _env(char **argv);
 void _setenv(char **argv);
 void _unsetenv(char **argv);
 void (*checkbuild(char **arv))(char **arv);
+
+/* main.c */
+void _handleCtrlC(int sig_num);
+void _readingInput(int argc, char const *argv[], char **str, size_t *size,
+				   FILE **filereader, int *isFileReader);
+char **_argsHandler(char **str, size_t *size);
 
 #endif
