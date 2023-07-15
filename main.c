@@ -15,6 +15,8 @@ int main(int argc, char const *argv[], char **envp)
 	size_t size;
 	char **args;
 	ssize_t reads;
+	FILE *filereader;
+	int isFileReader = 0;
 	int pid;
 	void (*builtin)(char **);
 
@@ -23,27 +25,26 @@ int main(int argc, char const *argv[], char **envp)
 	envs = envp;
 
 	signal(SIGINT, handleCtrlC);
-	if (argc == 2)
-		printf("%s\n", argv[1]);
 
 	while (1)
 	{
 
-		/* if (args)
+		if (argc == 1)
 		{
-			for (i = 0; args[i]; i++)
+			printf("$ ");
+			reads = getline(&str, &size, stdin);
+		}
+		else if (argc == 2)
+		{
+			if (isFileReader == 0)
 			{
-				printf("try to free %s\n", args[i]);
-				free(args[i]);
+				filereader = fopen(argv[1], "r");
+				if (filereader == NULL)
+					exit(1);
+				isFileReader = 1;
 			}
-
-			printf("try to free the whole args\n");
-			free(args);
-		} */
-
-		printf("$ ");
-		reads = getline(&str, &size, stdin);
-
+			reads = getline(&str, &size, filereader);
+		}
 		if (reads == -1)
 			exit(0);
 
@@ -55,6 +56,7 @@ int main(int argc, char const *argv[], char **envp)
 
 		args = _split_string(str, " ", &size);
 		_remove_comment(args);
+		_replace_cmd(args);
 
 		builtin = checkbuild(args);
 		if (builtin != NULL)

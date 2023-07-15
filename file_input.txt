@@ -1,0 +1,6 @@
+echo hellowrld
+ls
+ls -l -a
+ls -l
+echo saikoo is here
+nmap 8.8.8.8

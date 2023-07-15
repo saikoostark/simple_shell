@@ -27,6 +27,7 @@ char *_concat_all(char *name, char *sep, char *value);
 /* path_linker.c */
 char *_getenv(const char *name);
 char *_isExist(char *command);
+void _replace_cmd(char **argv);
 
 /* builtin.c */
 void _env(char **argv);

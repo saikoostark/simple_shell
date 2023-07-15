@@ -42,7 +42,7 @@ char *_isExist(char *command)
 	char *fullpath;
 	size_t i;
 
-	paths = _split_string(strdup(_getenv("PATH")), ":", &lenpaths);
+	paths = _split_string(_getenv("PATH"), ":", &lenpaths);
 
 	if (access(command, F_OK) != -1)
 	{
@@ -59,4 +59,35 @@ char *_isExist(char *command)
 		free(fullpath);
 	}
 	return (NULL);
+}
+
+void _replace_cmd(char **argv)
+{
+	int i;
+	size_t strlength;
+	char *pid_str;
+
+	for (i = 0; argv[i]; i++)
+	{
+		if (argv[i][0] == '$')
+		{
+			strlength = strlen(argv[i]);
+			if (strlength > 1)
+			{
+				if (argv[i][1] == '$')
+				{
+					pid_str = malloc(16 * sizeof(char));
+					snprintf(pid_str, 16, "%d", getpid());
+					argv[i] = pid_str;
+				}
+				else if (argv[i][1] == '?')
+				{
+				}
+				else
+				{
+					argv[i] = _getenv(argv[i] + 1);
+				}
+			}
+		}
+	}
 }

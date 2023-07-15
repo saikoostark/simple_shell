@@ -8,8 +8,9 @@ char **_split_string(char *str, char *delimiter, size_t *count)
 	char **splitArray;
 	char *token;
 	int i;
-
 	const char *pos = str;
+
+	str = strdup(str);
 	while ((pos = strstr(pos, delimiter)) != NULL)
 	{
 		delimiterCount++;
@@ -31,7 +32,7 @@ char **_split_string(char *str, char *delimiter, size_t *count)
 		token = strtok(NULL, delimiter);
 		i++;
 	}
-
+	free(str);
 	*count = delimiterCount + 1;
 	splitArray[*count] = NULL;
 	return splitArray;
@@ -41,6 +42,10 @@ char *_concat_all(char *name, char *sep, char *value)
 {
 	char *result;
 	int l1, l2, l3, i, k;
+
+	name = strdup(name);
+	sep = strdup(sep);
+	value = strdup(value);
 
 	l1 = strlen(name);
 	l2 = strlen(sep);
@@ -64,6 +69,10 @@ char *_concat_all(char *name, char *sep, char *value)
 
 	result[k] = '\0';
 
+	free(name);
+	free(sep);
+	free(value);
+
 	return (result);
 }
 
@@ -83,3 +92,4 @@ void _remove_comment(char **strs)
 	}
 	/* printf("done removing\n"); */
 }
+
