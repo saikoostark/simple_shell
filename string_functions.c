@@ -43,10 +43,6 @@ char *_concat_all(char *name, char *sep, char *value)
 	char *result;
 	int l1, l2, l3, i, k;
 
-	/* name = strdup(name);
-	sep = strdup(sep);
-	value = strdup(value);
-	*/
 	l1 = strlen(name);
 	l2 = strlen(sep);
 	l3 = strlen(value);
@@ -76,9 +72,9 @@ void _remove_comment(char **strs)
 {
 	size_t i;
 	int isComment = 0;
+
 	for (i = 0; strs[i] != NULL; i++)
 	{
-		/* printf("%s\n", strs[i]); */
 		if (strs[i][0] == '#' && isComment == 0)
 		{
 			isComment = 1;
@@ -89,7 +85,5 @@ void _remove_comment(char **strs)
 			free(strs[i]);
 			strs[i] = NULL;
 		}
-		/* printf("%lu\n", i); */
 	}
-	/* printf("done removing\n"); */
 }

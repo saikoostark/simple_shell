@@ -1,5 +1,25 @@
 #include "shell.h"
 
+void __exit(char **argv)
+{
+	int i, n;
+
+	if (argv[1])
+	{
+		n = atoi(argv[1]);
+		if (n <= -1)
+			n = 2;
+		for (i = 0; argv[i]; i++)
+			free(argv[i]);
+		free(argv);
+		exit(n);
+	}
+	for (i = 0; argv[i]; i++)
+		free(argv[i]);
+	free(argv);
+	exit(0);
+}
+
 /**
  * env - prints the current environment
  * @argv: array of arguments
@@ -98,7 +118,7 @@ void (*checkbuild(char **arv))(char **arv)
 {
 	int i, j;
 	builtin T[] = {
-		/* {"exit", exitt}, */
+		{"exit", __exit},
 		{"env", _env},
 		{"setenv", _setenv},
 		{"unsetenv", _unsetenv},

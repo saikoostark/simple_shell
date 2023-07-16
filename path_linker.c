@@ -55,37 +55,13 @@ char *_isExist(char *command)
 		fullpath = _concat_all(paths[i], "/", command);
 		if (access(fullpath, F_OK) != -1)
 		{
-			if (paths != NULL)
-			{
-				for (i = 0; paths[i]; i++)
-				{
-					if (paths[i] != NULL)
-					{
-						free(paths[i]);
-						paths[i] = NULL;
-					}
-				}
-				free(paths);
-				paths = NULL;
-			}
+			freeargs(paths);
 			return (fullpath);
 		}
 		free(fullpath);
 	}
 
-	if (paths != NULL)
-	{
-		for (i = 0; paths[i]; i++)
-		{
-			if (paths[i] != NULL)
-			{
-				free(paths[i]);
-				paths[i] = NULL;
-			}
-		}
-		free(paths);
-		paths = NULL;
-	}
+	freeargs(paths);
 
 	return (NULL);
 }
@@ -114,7 +90,7 @@ void _replace_cmd(char **argv)
 				}
 				else
 				{
-					argv[i] = _getenv(argv[i] + 1);
+					argv[i] = strdup(_getenv(argv[i] + 1));
 				}
 			}
 		}

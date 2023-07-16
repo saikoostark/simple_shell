@@ -52,7 +52,7 @@ char **_argsHandler(char **str, size_t *size)
 int main(int argc, char const *argv[], char **envp)
 {
 	char *str = NULL, *path = NULL, **args = NULL;
-	size_t size = 0, i = 0;
+	size_t size = 0;
 	FILE *filereader = NULL;
 	int isFileReader = 0, pid = 0;
 	void (*builtin)(char **);
@@ -61,7 +61,6 @@ int main(int argc, char const *argv[], char **envp)
 	signal(SIGINT, _handleCtrlC);
 	while (1)
 	{
-
 		_readingInput(argc, argv, &str, &size, &filereader, &isFileReader);
 		if (strlen(str) == 0)
 			continue;
@@ -75,6 +74,7 @@ int main(int argc, char const *argv[], char **envp)
 		if (builtin != NULL)
 		{
 			builtin(args);
+			
 			continue;
 		}
 		path = args[0];
@@ -92,25 +92,8 @@ int main(int argc, char const *argv[], char **envp)
 			return (1);
 		}
 		wait(NULL);
-		if (path != NULL)
-		{
-			free(path);
-			path = NULL;
-		}
-
-		if (args != NULL)
-		{
-			for (i = 0; args[i]; i++)
-			{
-				if (args[i] != NULL)
-				{
-					free(args[i]);
-					args[i] = NULL;
-				}
-			}
-			free(args);
-			args = NULL;
-		}
+		freearg(path);
+		freeargs(args);
 	}
 	return (0);
 }

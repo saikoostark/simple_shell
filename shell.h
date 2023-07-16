@@ -30,6 +30,7 @@ char *_isExist(char *command);
 void _replace_cmd(char **argv);
 
 /* builtin.c */
+void __exit(char **argv);
 void _env(char **argv);
 void _setenv(char **argv);
 void _unsetenv(char **argv);
@@ -41,4 +42,7 @@ void _readingInput(int argc, char const *argv[], char **str, size_t *size,
 				   FILE **filereader, int *isFileReader);
 char **_argsHandler(char **str, size_t *size);
 
+/* memory.c */
+void freearg(char *arg);
+void freeargs(char **argv);
 #endif
