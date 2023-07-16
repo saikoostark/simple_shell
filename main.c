@@ -65,20 +65,15 @@ int main(int argc, char const *argv[], char **envp)
 		if (strlen(str) == 0)
 			continue;
 		args = _argsHandler(&str, &size);
-		if (str != NULL)
-		{
-			free(str);
-			str = NULL;
-		}
+		free(str);
+		str = NULL;
 		builtin = checkbuild(args);
 		if (builtin != NULL)
 		{
 			builtin(args);
-			
 			continue;
 		}
-		path = args[0];
-		path = _isExist(path);
+		path = _isExist(args[0]);
 		if (!path)
 		{
 			printf("%s: No such file or directory\n", args[0]);
