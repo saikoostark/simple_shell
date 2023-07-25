@@ -20,13 +20,14 @@ void _handleCtrlC(int sig_num)
  * @isFileReader: function arg
  */
 void _readingInput(int argc, char const *argv[], char **str, size_t *size,
-				   FILE **filereader, int *isFileReader)
+				   FILE **filereader, int *isFileReader, int atty)
 {
 	ssize_t reads;
 
 	if (argc == 1)
 	{
-		printf("$ ");
+		if (atty)
+			printf("$ ");
 		reads = getline(str, size, stdin);
 	}
 	else if (argc == 2)
@@ -78,14 +79,15 @@ int main(int argc, char const *argv[], char **envp)
 	char *str = NULL, *path = NULL, **args = NULL;
 	size_t size = 0;
 	FILE *filereader = NULL;
-	int isFileReader = 0, pid = 0;
+	int isFileReader = 0, pid = 0, atty = 0;
 	void (*builtin)(char **);
 
 	environ = envp;
 	signal(SIGINT, _handleCtrlC);
-	while (1)
+	atty = isatty(STDIN_FILENO);
+	do
 	{
-		_readingInput(argc, argv, &str, &size, &filereader, &isFileReader);
+		_readingInput(argc, argv, &str, &size, &filereader, &isFileReader, atty);
 		if (strlen(str) == 0)
 			continue;
 		args = _argsHandler(&str, &size);
@@ -113,6 +115,6 @@ int main(int argc, char const *argv[], char **envp)
 		wait(NULL);
 		freearg(path);
 		freeargs(args);
-	}
+	} while (atty);
 	return (0);
 }

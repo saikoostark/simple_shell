@@ -39,7 +39,7 @@ void (*checkbuild(char **arv))(char **arv);
 /* main.c */
 void _handleCtrlC(int sig_num);
 void _readingInput(int argc, char const *argv[], char **str, size_t *size,
-				   FILE **filereader, int *isFileReader);
+				   FILE **filereader, int *isFileReader, int atty);
 char **_argsHandler(char **str, size_t *size);
 
 /* memory.c */
