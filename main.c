@@ -1,13 +1,24 @@
 #include "shell.h"
 
-/* char **environ = NULL; */
-
+/**
+ * _handleCtrlC - function
+ * @sig_num: function arg
+ */
 void _handleCtrlC(int sig_num)
 {
 	(void)sig_num;
 	exit(0);
 }
 
+/**
+ * _readingInput - function
+ * @argc: function arg
+ * @argv: function arg
+ * @str: function arg
+ * @size: function arg
+ * @filereader: function arg
+ * @isFileReader: function arg
+ */
 void _readingInput(int argc, char const *argv[], char **str, size_t *size,
 				   FILE **filereader, int *isFileReader)
 {
@@ -39,6 +50,12 @@ void _readingInput(int argc, char const *argv[], char **str, size_t *size,
 		(*str)[strlen(*str) - 1] = '\0';
 }
 
+/**
+ * _argsHandler - function
+ * @str: function arg
+ * @size: function arg
+ * Return: Always 0 (Success)
+ */
 char **_argsHandler(char **str, size_t *size)
 {
 	char **args = NULL;
@@ -49,6 +66,13 @@ char **_argsHandler(char **str, size_t *size)
 	return (args);
 }
 
+/**
+ * main - function
+ * @argc: function arg
+ * @argv: function arg
+ * @envp: function arg
+ * Return: Always 0 (Success)
+ */
 int main(int argc, char const *argv[], char **envp)
 {
 	char *str = NULL, *path = NULL, **args = NULL;

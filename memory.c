@@ -1,5 +1,8 @@
 #include "shell.h"
-
+/**
+ * freearg - function
+ * @arg: function arg
+ */
 void freearg(char *arg)
 {
 
@@ -10,6 +13,10 @@ void freearg(char *arg)
 	}
 }
 
+/**
+ * freeargs - function
+ * @args: function arg
+ */
 void freeargs(char **args)
 {
 	size_t i;

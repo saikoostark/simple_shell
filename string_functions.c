@@ -1,5 +1,12 @@
 #include "shell.h"
 
+/**
+ * _split_string - function
+ * @str: function arg
+ * @delimiter: function arg
+ * @count: function arg
+ * Return: Always 0 (Success)
+ */
 char **_split_string(char *str, char *delimiter, size_t *count)
 {
 	/* int strLen = strlen(str); */
@@ -38,6 +45,13 @@ char **_split_string(char *str, char *delimiter, size_t *count)
 	return (splitArray);
 }
 
+/**
+ * _concat_all - function
+ * @name: function arg
+ * @sep: function arg
+ * @value: function arg
+ * Return: Always 0 (Success)
+ */
 char *_concat_all(char *name, char *sep, char *value)
 {
 	char *result;
@@ -68,6 +82,10 @@ char *_concat_all(char *name, char *sep, char *value)
 	return (result);
 }
 
+/**
+ * _remove_comment - function
+ * @strs: function arg
+ */
 void _remove_comment(char **strs)
 {
 	size_t i;

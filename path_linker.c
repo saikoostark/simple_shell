@@ -1,9 +1,9 @@
 #include "shell.h"
 
 /**
- * _getenv - gets the value of the global variable
- * @name: name of the global variable
- * Return: string of value
+ * _getenv - function
+ * @name: function arg
+ * Return: Always 0 (Success)
  */
 char *_getenv(const char *name)
 {
@@ -34,6 +34,11 @@ char *_getenv(const char *name)
 	return (0);
 }
 
+/**
+ * _isExist - function
+ * @command: function arg
+ * Return: Always 0 (Success)
+ */
 char *_isExist(char *command)
 {
 
@@ -66,6 +71,10 @@ char *_isExist(char *command)
 	return (NULL);
 }
 
+/**
+ * _replace_cmd - function
+ * @argv: function arg
+ */
 void _replace_cmd(char **argv)
 {
 	int i;

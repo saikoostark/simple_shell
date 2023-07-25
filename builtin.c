@@ -1,5 +1,9 @@
 #include "shell.h"
 
+/**
+ * __exit - function
+ * @argv: function arg
+ */
 void __exit(char **argv)
 {
 	int i, n;
@@ -21,8 +25,8 @@ void __exit(char **argv)
 }
 
 /**
- * env - prints the current environment
- * @argv: array of arguments
+ * _env - function
+ * @argv: function arg
  */
 void _env(char **argv)
 {
@@ -35,6 +39,10 @@ void _env(char **argv)
 	}
 }
 
+/**
+ * _setenv - function
+ * @argv: function arg
+ */
 void _setenv(char **argv)
 {
 	int i, j, k;
@@ -78,6 +86,10 @@ void _setenv(char **argv)
 	}
 }
 
+/**
+ * _unsetenv - function
+ * @argv: function arg
+ */
 void _unsetenv(char **argv)
 {
 	int i, j;
@@ -114,6 +126,11 @@ void _unsetenv(char **argv)
 	}
 }
 
+/**
+ * checkbuild - function
+ * @arv: function arg
+ * Return: Always 0 (Success)
+ */
 void (*checkbuild(char **arv))(char **arv)
 {
 	int i, j;
