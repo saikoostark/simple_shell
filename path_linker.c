@@ -92,18 +92,18 @@ void _replace_cmd(char **argv)
 				{
 					pid_str = malloc(16 * sizeof(char));
 					snprintf(pid_str, 16, "%d", getpid());
-					freearg(argv[i]);
+					freearg(&argv[i]);
 					argv[i] = pid_str;
 				}
 				else if (argv[i][1] == '?')
 				{
-					freearg(argv[i]);
+					freearg(&argv[i]);
 					argv[i] = strdup("0");
 				}
 				else
 				{
 					temp = _getenv(argv[i] + 1);
-					freearg(argv[i]);
+					freearg(&argv[i]);
 					if (temp != NULL)
 						argv[i] = strdup(temp);
 					else

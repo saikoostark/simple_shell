@@ -3,13 +3,13 @@
  * freearg - function
  * @arg: function arg
  */
-void freearg(char *arg)
+void freearg(char **arg)
 {
 
-	if (arg != NULL)
+	if (*arg != NULL)
 	{
-		free(arg);
-		arg = NULL;
+		free(*arg);
+		*arg = NULL;
 	}
 }
 

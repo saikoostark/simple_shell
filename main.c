@@ -88,34 +88,34 @@ int main(int argc, char const *argv[], char **envp)
 	environ = envp;
 	signal(SIGINT, _handleCtrlC);
 	atty = isatty(STDIN_FILENO);
-	do{
+	do
+	{
 		_readingInput(argc, argv, &str, &size, &filereader, &isFileReader, atty);
 		if (strlen(str) == 0)
 			continue;
 		args = _argsHandler(&str, &size);
-		free(str);
-		str = NULL;
+		freearg(&str);
+		/* str = NULL; */
 		builtin = checkbuild(args);
-		if (builtin != NULL)
+		if (builtin == NULL)
 		{
-			builtin(args);
-			continue;
-		}
-		path = _isExist(args[0]);
-		if (path)
-		{
-			pid = fork();
-			errorfork(pid);
-			if (pid == 0)
+			path = _isExist(args[0]);
+			if (path)
 			{
-				execve(path, args, environ);
-				printf("%s: No such file or directory\n", args[0]);
-				return (1);
+				pid = fork();
+				errorfork(pid);
+				if (pid == 0)
+				{
+					execve(path, args, environ);
+					printf("%s: No such file or directory\n", args[0]);
+					return (1);
+				}
 			}
 		}
-		/* continue; */
+		else
+			builtin(args);
 		wait(NULL);
-		freearg(path);
+		freearg(&path);
 		freeargs(args);
 	} while (atty);
 	return (0);
