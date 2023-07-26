@@ -46,7 +46,7 @@ char **_argsHandler(char **str, size_t *size);
 
 /* memory.c */
 void freearg(char **arg);
-void freeargs(char **argv);
+void freeargs(char ***argv);
 
 /* helper.c */
 void errorfork(int pid);

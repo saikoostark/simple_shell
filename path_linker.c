@@ -60,13 +60,13 @@ char *_isExist(char *command)
 		fullpath = _concat_all(paths[i], "/", command);
 		if (access(fullpath, F_OK) != -1)
 		{
-			freeargs(paths);
+			freeargs(&paths);
 			return (fullpath);
 		}
 		free(fullpath);
 	}
 
-	freeargs(paths);
+	freeargs(&paths);
 	printf("%s: No such file or directory\n", command);
 	return (NULL);
 }

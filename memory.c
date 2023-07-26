@@ -17,19 +17,19 @@ void freearg(char **arg)
  * freeargs - function
  * @args: function arg
  */
-void freeargs(char **args)
+void freeargs(char ***args)
 {
 	size_t i;
 
-	if (args != NULL)
+	if (*args != NULL)
 	{
 
-		for (i = 0; args[i]; i++)
+		for (i = 0; (*args)[i] != NULL; i++)
 		{
-			free(args[i]);
-			args[i] = NULL;
+			free((*args)[i]);
+			(*args)[i] = NULL;
 		}
-		free(args);
-		args = NULL;
+		free(*args);
+		*args = NULL;
 	}
 }

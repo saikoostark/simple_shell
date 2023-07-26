@@ -116,7 +116,7 @@ int main(int argc, char const *argv[], char **envp)
 			builtin(args);
 		wait(NULL);
 		freearg(&path);
-		freeargs(args);
+		freeargs(&args);
 	} while (atty);
 	return (0);
 }
