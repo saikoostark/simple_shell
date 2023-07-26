@@ -82,20 +82,18 @@ int main(int argc, char const *argv[], char **envp)
 	char *str = NULL, *path = NULL, **args = NULL;
 	size_t size = 0;
 	FILE *filereader = NULL;
-	int isFileReader = 0, pid = 0, atty = 0;
+	int isFileReader = 0, pid = 0, atty = 0, status = 0;
 	void (*builtin)(char **);
 
 	environ = envp;
 	signal(SIGINT, _handleCtrlC);
 	atty = isatty(STDIN_FILENO);
-	do
-	{
+	do {
 		_readingInput(argc, argv, &str, &size, &filereader, &isFileReader, atty);
 		if (strlen(str) == 0)
 			continue;
 		args = _argsHandler(&str, &size);
 		freearg(&str);
-		/* str = NULL; */
 		builtin = checkbuild(args);
 		if (builtin == NULL)
 		{
@@ -108,13 +106,15 @@ int main(int argc, char const *argv[], char **envp)
 				{
 					execve(path, args, environ);
 					printf("%s: No such file or directory\n", args[0]);
-					return (1);
+					return (2);
 				}
 			}
 		}
-		else
+		else if (builtin != NULL)
 			builtin(args);
-		wait(NULL);
+		waitpid(pid, &status, 0);
+		if (atty == 0)
+			exit(WEXITSTATUS(status));
 		freearg(&path);
 		freeargs(&args);
 	} while (atty);
