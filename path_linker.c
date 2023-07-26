@@ -102,9 +102,12 @@ void _replace_cmd(char **argv)
 				}
 				else
 				{
-					temp = strdup(_getenv(argv[i] + 1));
+					temp = _getenv(argv[i] + 1);
 					freearg(argv[i]);
-					argv[i] = temp;
+					if (temp != NULL)
+						argv[i] = strdup(temp);
+					else
+						argv[i] = strdup("");
 				}
 			}
 		}
