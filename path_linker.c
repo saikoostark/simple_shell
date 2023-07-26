@@ -67,7 +67,7 @@ char *_isExist(char *command)
 	}
 
 	freeargs(paths);
-
+	printf("%s: No such file or directory\n", command);
 	return (NULL);
 }
 
@@ -97,6 +97,8 @@ void _replace_cmd(char **argv)
 				}
 				else if (argv[i][1] == '?')
 				{
+					freearg(argv[i]);
+					argv[i] = strdup("0");
 				}
 				else
 				{

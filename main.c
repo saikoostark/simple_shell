@@ -18,6 +18,7 @@ void _handleCtrlC(int sig_num)
  * @size: function arg
  * @filereader: function arg
  * @isFileReader: function arg
+ * @atty: function arg
  */
 void _readingInput(int argc, char const *argv[], char **str, size_t *size,
 				   FILE **filereader, int *isFileReader, int atty)
@@ -85,8 +86,7 @@ int main(int argc, char const *argv[], char **envp)
 	environ = envp;
 	signal(SIGINT, _handleCtrlC);
 	atty = isatty(STDIN_FILENO);
-	do
-	{
+	do {
 		_readingInput(argc, argv, &str, &size, &filereader, &isFileReader, atty);
 		if (strlen(str) == 0)
 			continue;
@@ -100,18 +100,17 @@ int main(int argc, char const *argv[], char **envp)
 			continue;
 		}
 		path = _isExist(args[0]);
-		if (!path)
+		if (path)
 		{
-			printf("%s: No such file or directory\n", args[0]);
-			continue;
+			pid = fork();
+			if (pid == 0)
+			{
+				execve(path, args, environ);
+				printf("%s: No such file or directory\n", args[0]);
+				return (1);
+			}
 		}
-		pid = fork();
-		if (pid == 0)
-		{
-			execve(path, args, environ);
-			printf("%s: No such file or directory\n", args[0]);
-			return (1);
-		}
+		/* continue; */
 		wait(NULL);
 		freearg(path);
 		freeargs(args);
