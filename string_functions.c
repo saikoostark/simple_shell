@@ -148,6 +148,11 @@ void _remove_whitespaces(char **str)
 	*str = newstr;
 }
 
+/**
+ * _strtok - function
+ *  @str: function arg
+ *  @delimiters: function arg
+ */
 char *_strtok(char *str, const char *delimiters)
 {
 	static char *token_ptr;
