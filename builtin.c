@@ -21,7 +21,7 @@ void __exit(char **argv)
 	for (i = 0; argv[i]; i++)
 		free(argv[i]);
 	free(argv);
-	exit(EXIT_FAILURE);
+	exit(EXIT_SUCCESS);
 }
 
 /**
