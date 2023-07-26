@@ -152,6 +152,7 @@ void _remove_whitespaces(char **str)
  * _strtok - function
  *  @str: function arg
  *  @delimiters: function arg
+ * Return: Always 0 (Success)
  */
 char *_strtok(char *str, const char *delimiters)
 {
