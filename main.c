@@ -39,7 +39,6 @@ void _readingInput(int argc, char const *argv[], char **str, size_t *size,
 			if (filereader == NULL)
 				exit(1);
 			*isFileReader = 1;
-			printf("in file reader mode \n");
 		}
 		reads = getline(str, size, *filereader);
 	}
