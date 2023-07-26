@@ -11,8 +11,11 @@ void __exit(char **argv)
 	if (argv[1])
 	{
 		n = atoi(argv[1]);
-		if (n <= -1)
+		if (n <= -1 || !isdigit(argv[1][0]))
+		{
+			fprintf(stderr, "%s: 1: exit: Illegal number: %s\n", _getenv("_"), argv[1]);
 			n = 2;
+		}
 		for (i = 0; argv[i]; i++)
 			free(argv[i]);
 		free(argv);
