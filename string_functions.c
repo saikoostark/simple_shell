@@ -150,7 +150,7 @@ void _remove_whitespaces(char **str)
 
 char *_strtok(char *str, const char *delimiters)
 {
-	static char *token_ptr = NULL;
+	static char *token_ptr;
 	char *token_start = NULL;
 
 	if (str != NULL)
@@ -160,7 +160,7 @@ char *_strtok(char *str, const char *delimiters)
 
 	if (token_ptr == NULL || *token_ptr == '\0')
 	{
-		return NULL;
+		return (NULL);
 	}
 
 	while (*token_ptr != '\0' && strchr(delimiters, *token_ptr) != NULL)
@@ -170,7 +170,7 @@ char *_strtok(char *str, const char *delimiters)
 
 	if (*token_ptr == '\0')
 	{
-		return NULL;
+		return (NULL);
 	}
 
 	token_start = token_ptr;
@@ -184,5 +184,5 @@ char *_strtok(char *str, const char *delimiters)
 		*token_ptr = '\0';
 		token_ptr++;
 	}
-	return token_start;
+	return (token_start);
 }

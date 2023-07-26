@@ -52,8 +52,4 @@ void freeargs(char ***argv);
 /* helper.c */
 void errorfork(int pid);
 
-/* getline.c */
-void assign_lineptr(char **lineptr, size_t *n, char *buffer, size_t b);
-ssize_t _getline(char **lineptr, size_t *n, FILE *stream);
-
 #endif
