@@ -10,6 +10,7 @@
 #include <stddef.h>
 #include <sys/stat.h>
 #include <signal.h>
+#include <ctype.h>
 
 extern char **environ;
 
@@ -23,6 +24,7 @@ typedef struct builtin
 char **_split_string(char *str, char *delim, size_t *count);
 void _remove_comment(char **strs);
 char *_concat_all(char *name, char *sep, char *value);
+void _remove_whitespaces(char **str);
 
 /* path_linker.c */
 char *_getenv(const char *name);

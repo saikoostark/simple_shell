@@ -39,6 +39,7 @@ void _readingInput(int argc, char const *argv[], char **str, size_t *size,
 			if (filereader == NULL)
 				exit(1);
 			*isFileReader = 1;
+			printf("in file reader mode \n");
 		}
 		reads = getline(str, size, *filereader);
 	}
@@ -62,6 +63,7 @@ char **_argsHandler(char **str, size_t *size)
 {
 	char **args = NULL;
 
+	_remove_whitespaces(str);
 	args = _split_string(*str, " ", size);
 	_remove_comment(args);
 	_replace_cmd(args);
@@ -86,7 +88,7 @@ int main(int argc, char const *argv[], char **envp)
 	environ = envp;
 	signal(SIGINT, _handleCtrlC);
 	atty = isatty(STDIN_FILENO);
-	do {
+	do{
 		_readingInput(argc, argv, &str, &size, &filereader, &isFileReader, atty);
 		if (strlen(str) == 0)
 			continue;

@@ -105,3 +105,45 @@ void _remove_comment(char **strs)
 		}
 	}
 }
+
+/**
+ * _remove_whitespaces - function
+ * @str: function arg
+ */
+void _remove_whitespaces(char **str)
+{
+	char *newstr = NULL;
+	int oldsize = 0, spcs = 0, newsize = 0, start = 0, end = 0, i = 0, j = 0;
+
+	if (str == NULL || *str == NULL)
+		return;
+	oldsize = strlen(*str), end = oldsize;
+	for (i = 0; (*str)[i] != '\0'; i++)
+	{
+		if ((*str)[i] != ' ')
+		{
+			start = (int)i;
+			break;
+		}
+		spcs++;
+	}
+	for (i = oldsize - 1; i >= 0; i--)
+	{
+		if ((*str)[i] != ' ')
+		{
+			end = (int)i;
+			break;
+		}
+		spcs++;
+	}
+	end++;
+	newsize = (int)oldsize - spcs;
+	newstr = malloc(newsize + 1);
+	for (i = start, j = 0; i < end; i++, j++)
+	{
+		newstr[j] = (*str)[i];
+	}
+	newstr[j] = '\0';
+	free(*str);
+	*str = newstr;
+}
