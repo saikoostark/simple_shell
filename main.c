@@ -7,7 +7,7 @@
 void _handleCtrlC(int sig_num)
 {
 	(void)sig_num;
-	_exit(0);
+	_exit(EXIT_SUCCESS);
 }
 
 /**
