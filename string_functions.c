@@ -31,12 +31,12 @@ char **_split_string(char *str, char *delimiter, size_t *count)
 		return (NULL);
 	}
 
-	token = strtok((char *)str, delimiter);
+	token = _strtok((char *)str, delimiter);
 	i = 0;
 	while (token != NULL)
 	{
 		splitArray[i] = strdup(token);
-		token = strtok(NULL, delimiter);
+		token = _strtok(NULL, delimiter);
 		i++;
 	}
 	free(str);
@@ -146,4 +146,43 @@ void _remove_whitespaces(char **str)
 	newstr[j] = '\0';
 	free(*str);
 	*str = newstr;
+}
+
+char *_strtok(char *str, const char *delimiters)
+{
+	static char *token_ptr = NULL;
+	char *token_start = NULL;
+
+	if (str != NULL)
+	{
+		token_ptr = str;
+	}
+
+	if (token_ptr == NULL || *token_ptr == '\0')
+	{
+		return NULL;
+	}
+
+	while (*token_ptr != '\0' && strchr(delimiters, *token_ptr) != NULL)
+	{
+		token_ptr++;
+	}
+
+	if (*token_ptr == '\0')
+	{
+		return NULL;
+	}
+
+	token_start = token_ptr;
+
+	while (*token_ptr != '\0' && strchr(delimiters, *token_ptr) == NULL)
+	{
+		token_ptr++;
+	}
+	if (*token_ptr != '\0')
+	{
+		*token_ptr = '\0';
+		token_ptr++;
+	}
+	return token_start;
 }

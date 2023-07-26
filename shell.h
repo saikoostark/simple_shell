@@ -25,6 +25,7 @@ char **_split_string(char *str, char *delim, size_t *count);
 void _remove_comment(char **strs);
 char *_concat_all(char *name, char *sep, char *value);
 void _remove_whitespaces(char **str);
+char *_strtok(char *str, const char *delimiters);
 
 /* path_linker.c */
 char *_getenv(const char *name);
@@ -50,4 +51,9 @@ void freeargs(char ***argv);
 
 /* helper.c */
 void errorfork(int pid);
+
+/* getline.c */
+void assign_lineptr(char **lineptr, size_t *n, char *buffer, size_t b);
+ssize_t _getline(char **lineptr, size_t *n, FILE *stream);
+
 #endif

@@ -88,7 +88,8 @@ int main(int argc, char const *argv[], char **envp)
 	environ = envp;
 	signal(SIGINT, _handleCtrlC);
 	atty = isatty(STDIN_FILENO);
-	do {
+	do
+	{
 		_readingInput(argc, argv, &str, &size, &filereader, &isFileReader, atty);
 		if (strlen(str) == 0)
 			continue;
