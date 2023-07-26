@@ -31,7 +31,7 @@ char *_getenv(const char *name)
 			}
 		}
 	}
-	return (0);
+	return (NULL);
 }
 
 /**
@@ -79,7 +79,7 @@ void _replace_cmd(char **argv)
 {
 	int i;
 	size_t strlength;
-	char *pid_str;
+	char *pid_str, *temp;
 
 	for (i = 0; argv[i]; i++)
 	{
@@ -92,6 +92,7 @@ void _replace_cmd(char **argv)
 				{
 					pid_str = malloc(16 * sizeof(char));
 					snprintf(pid_str, 16, "%d", getpid());
+					freearg(argv[i]);
 					argv[i] = pid_str;
 				}
 				else if (argv[i][1] == '?')
@@ -99,7 +100,9 @@ void _replace_cmd(char **argv)
 				}
 				else
 				{
-					argv[i] = strdup(_getenv(argv[i] + 1));
+					temp = strdup(_getenv(argv[i] + 1));
+					freearg(argv[i]);
+					argv[i] = temp;
 				}
 			}
 		}
