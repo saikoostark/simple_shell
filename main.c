@@ -103,6 +103,7 @@ int main(int argc, char const *argv[], char **envp)
 		if (path)
 		{
 			pid = fork();
+			errorfork(pid);
 			if (pid == 0)
 			{
 				execve(path, args, environ);
