@@ -30,6 +30,10 @@ void _readingInput(int argc, char const *argv[], char **str, size_t *size,
 		if (atty)
 			printf("$ ");
 		reads = getline(str, size, stdin);
+		if (reads == -1)
+		{
+			freearg(str);
+		}
 	}
 	else if (argc == 2)
 	{
@@ -85,7 +89,7 @@ int main(int argc, char const *argv[], char **envp)
 	void (*builtin)(char **);
 
 	environ = envp;
-	signal(SIGINT, _handleCtrlC);
+	/* signal(SIGINT, _handleCtrlC); */
 	atty = isatty(STDIN_FILENO);
 	do {
 		_readingInput(argc, argv, &str, &size, &filereader, &isFileReader, atty);
