@@ -91,7 +91,8 @@ int main(int argc, char const *argv[], char **envp)
 	environ = envp;
 	/* signal(SIGINT, _handleCtrlC); */
 	atty = isatty(STDIN_FILENO);
-	do {
+	do
+	{
 		_readingInput(argc, argv, &str, &size, &filereader, &isFileReader, atty);
 		if (strlen(str) == 0)
 			continue;
@@ -116,10 +117,10 @@ int main(int argc, char const *argv[], char **envp)
 		else if (builtin != NULL)
 			builtin(args);
 		waitpid(pid, &status, 0);
-		if (atty == 0)
-			exit(WEXITSTATUS(status));
 		freearg(&path);
 		freeargs(&args);
+		if (atty == 0)
+			exit(WEXITSTATUS(status));
 	} while (atty);
 	return (0);
 }

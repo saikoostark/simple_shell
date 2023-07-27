@@ -5,8 +5,6 @@
 			"label": "C/C++: gcc build active file",
 			"command": "/usr/bin/gcc",
 			"args": [
-				"-g",
-				"-fsanitize=address",
 				"*.c",
 				"-o",
 				"${fileDirname}/main",
