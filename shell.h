@@ -51,5 +51,5 @@ void freeargs(char ***argv);
 
 /* helper.c */
 void errorfork(int pid);
-
+void checkfreespaces(char **str);
 #endif

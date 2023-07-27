@@ -54,6 +54,7 @@ void _readingInput(int argc, char const *argv[], char **str, size_t *size,
 	}
 	if ((*str)[strlen(*str) - 1] == '\n')
 		(*str)[strlen(*str) - 1] = '\0';
+	checkfreespaces(str);
 }
 
 /**
@@ -94,7 +95,7 @@ int main(int argc, char const *argv[], char **envp)
 	while (1)
 	{
 		_readingInput(argc, argv, &str, &size, &filereader, &isFileReader, atty);
-		if (strlen(str) == 0)
+		if (str == NULL || strlen(str) == 0)
 			continue;
 		args = _argsHandler(&str, &size);
 		freearg(&str);
