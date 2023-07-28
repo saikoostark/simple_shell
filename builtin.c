@@ -4,6 +4,7 @@
  * __exit - function
  * @argv: function arg
  * @status: function arg
+ * @name: function arg
  */
 void __exit(char **argv, int *status, char *name)
 {
@@ -32,6 +33,7 @@ void __exit(char **argv, int *status, char *name)
  * _env - function
  * @argv: function arg
  * @status: function arg
+ * @name: function arg
  */
 void _env(char **argv, int *status, char *name)
 {
@@ -50,6 +52,7 @@ void _env(char **argv, int *status, char *name)
  * _setenv - function
  * @argv: function arg
  * @status: function arg
+ * @name: function arg
  */
 void _setenv(char **argv, int *status, char *name)
 {
@@ -72,7 +75,6 @@ void _setenv(char **argv, int *status, char *name)
 			{
 				if (argv[1][j] != environ[i][j])
 					break;
-
 				j++;
 			}
 			if (argv[1][j] == '\0')
@@ -90,7 +92,6 @@ void _setenv(char **argv, int *status, char *name)
 	}
 	if (!environ[i])
 	{
-
 		environ[i] = _concat_all(argv[1], "=", argv[2]);
 		environ[i + 1] = '\0';
 	}
@@ -100,6 +101,7 @@ void _setenv(char **argv, int *status, char *name)
  * _unsetenv - function
  * @argv: function arg
  * @status: function arg
+ * @name: function arg
  */
 void _unsetenv(char **argv, int *status, char *name)
 {
@@ -157,7 +159,8 @@ void (*checkbuild(char **arv))(char **arv, int *status, char *name)
 	for (i = 0; T[i].name; i++)
 	{
 		j = 0;
-		if (T[i].name[j] == arv[0][j])
+
+		if (arv[0] != NULL && T[i].name[j] == arv[0][j])
 		{
 			for (j = 0; arv[0][j]; j++)
 			{

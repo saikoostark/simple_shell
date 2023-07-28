@@ -21,7 +21,7 @@ typedef struct builtin
 
 /* string_functions.c */
 char **_split_string(char *str, char *delim, size_t *count);
-void _remove_comment(char **strs);
+void _remove_comment(char ***strs);
 char *_concat_all(char *name, char *sep, char *value);
 void _remove_whitespaces(char **str);
 char *_strtok(char *str, const char *delimiters);

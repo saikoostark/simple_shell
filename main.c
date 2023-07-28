@@ -71,8 +71,10 @@ char **_argsHandler(char **str, size_t *size)
 
 	_remove_whitespaces(str);
 	args = _split_string(*str, " ", size);
-	_remove_comment(args);
-	_replace_cmd(args);
+	_remove_comment(&args);
+
+	if (args)
+		_replace_cmd(args);
 	return (args);
 }
 
@@ -88,12 +90,10 @@ int main(int argc, char const *argv[], char **envp)
 	char *str = NULL, *path = NULL, **args = NULL;
 	size_t size = 0;
 	FILE *filrdr = NULL;
-	int isfilrdr = 0, pid = 0, atty = 0, status = 0;
+	int isfilrdr = 0, pid = 0, atty = isatty(STDIN_FILENO), status = 0;
 	void (*builtin)(char **, int *, char *);
 
 	environ = envp;
-	signal(SIGINT, _handleCtrlC);
-	atty = isatty(STDIN_FILENO);
 	while (1)
 	{
 		_readingInput(argc, argv, &str, &size, &filrdr, &isfilrdr, atty, &status);
@@ -101,6 +101,8 @@ int main(int argc, char const *argv[], char **envp)
 			continue;
 		args = _argsHandler(&str, &size);
 		freearg(&str);
+		if (args == NULL)
+			continue;
 		builtin = checkbuild(args);
 		if (builtin == NULL)
 		{

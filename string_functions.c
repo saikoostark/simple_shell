@@ -86,23 +86,29 @@ char *_concat_all(char *name, char *sep, char *value)
  * _remove_comment - function
  * @strs: function arg
  */
-void _remove_comment(char **strs)
+void _remove_comment(char ***strs)
 {
 	size_t i;
 	int isComment = 0;
 
-	for (i = 0; strs[i] != NULL; i++)
+	for (i = 0; (*strs)[i] != NULL; i++)
 	{
-		if (strs[i][0] == '#' && isComment == 0)
+		if ((*strs)[i][0] == '#' && isComment == 0)
 		{
 			isComment = 1;
 		}
 
 		if (isComment)
 		{
-			free(strs[i]);
-			strs[i] = NULL;
+			free((*strs)[i]);
+			(*strs)[i] = NULL;
 		}
+	}
+
+	if ((*strs)[0] == NULL)
+	{
+		free(*strs);
+		*strs = NULL;
 	}
 }
 
