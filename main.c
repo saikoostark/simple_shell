@@ -32,26 +32,29 @@ void _readingInput(int argc, char const *argv[], char **str, size_t *size,
 		if (atty)
 			printf("$ ");
 		reads = getline(str, size, stdin);
-		if (reads == -1)
-		{
-			freearg(str);
-		}
 	}
 	else if (argc == 2)
 	{
 		if (*isfilrdr == 0)
 		{
 			*filrdr = fopen(argv[1], "r");
-			if (filrdr == NULL)
-				exit(1);
+			if (*filrdr == NULL)
+			{
+				fprintf(stderr, "%s: 0: cannot open %s: No such file\n", argv[0], argv[1]);
+				freearg(str);
+				freeargs(&environ);
+				exit(2);
+			}
 			*isfilrdr = 1;
 		}
+
 		reads = getline(str, size, *filrdr);
 	}
 	if (reads == -1)
 	{
 		if (*filrdr != NULL)
 			fclose(*filrdr);
+		freearg(str);
 		freeargs(&environ);
 		exit(*status);
 	}
