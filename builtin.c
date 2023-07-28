@@ -59,8 +59,7 @@ void _env(char **argv, int *status, char *name)
 void _setenv(char **argv, int *status, char *name)
 {
 	int i, j, k;
-	(void)status;
-	(void)name;
+	(void)status, (void)name;
 
 	if (!argv[1] || !argv[2])
 	{
@@ -81,6 +80,7 @@ void _setenv(char **argv, int *status, char *name)
 			}
 			if (argv[1][j] == '\0')
 			{
+				environ[i] = realloc(environ[i], j + strlen(argv[2]) + 3);
 				k = 0;
 				while (argv[2][k])
 				{
@@ -157,6 +157,7 @@ void (*checkbuild(char **arv))(char **arv, int *status, char *name)
 		{"env", _env},
 		{"setenv", _setenv},
 		{"unsetenv", _unsetenv},
+		{"cd", _cd},
 		{NULL, NULL}};
 
 	for (i = 0; T[i].name; i++)

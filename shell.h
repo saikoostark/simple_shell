@@ -38,6 +38,9 @@ void _setenv(char **argv, int *status, char *name);
 void _unsetenv(char **argv, int *status, char *name);
 void (*checkbuild(char **arv))(char **arv, int *status, char *name);
 
+/* builtin2.c */
+void _cd(char **argv, int *status, char *name);
+
 /* main.c */
 void _handleCtrlC(int sig_num);
 void _readingInput(int argc, char const *argv[], char **str, size_t *size,
@@ -55,6 +58,6 @@ size_t strlendel(const char *str, char del);
 int strnncmp(const char *str1, const char *str2, char del1, char del2);
 
 /* envhelper.c */
-char **envloader(char **envp);
+void envloader(char **envp);
 
 #endif

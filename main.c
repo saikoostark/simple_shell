@@ -98,7 +98,7 @@ int main(int argc, char const *argv[], char **envp)
 	int isfilrdr = 0, pid = 0, atty = isatty(STDIN_FILENO), status = 0;
 	void (*builtin)(char **, int *, char *);
 
-	environ = envloader(envp);
+	envloader(envp);
 	while (1)
 	{
 		_readingInput(argc, argv, &str, &size, &filrdr, &isfilrdr, atty, &status);
