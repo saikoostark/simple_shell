@@ -23,7 +23,7 @@ void _cd(char **argv, int *status, char *name)
 	else
 	{
 		if (strcmp(argv[1], (char *)"-") == 0)
-			tmp = _getenv("OOLDPWD"), newpath = (tmp != NULL) ? strdup(tmp) : NULL;
+			tmp = _getenv("OLDPWD"), newpath = (tmp != NULL) ? strdup(tmp) : NULL;
 		else
 			newpath = strdup(argv[1]);
 	}
@@ -36,7 +36,7 @@ void _cd(char **argv, int *status, char *name)
 		oldargs = malloc(4 * sizeof(char *)), newargs = malloc(4 * sizeof(char *));
 		newargs[0] = strdup("setenv"), newargs[1] = strdup("PWD"),
 		newargs[2] = strdup(newpath), newargs[3] = NULL;
-		oldargs[0] = strdup("setenv"), oldargs[1] = strdup("OOLDPWD"),
+		oldargs[0] = strdup("setenv"), oldargs[1] = strdup("OLDPWD"),
 		oldargs[2] = strdup(oldpath), oldargs[3] = NULL;
 		_setenv(oldargs, status, name), _setenv(newargs, status, name);
 		freeargs(&newargs), freeargs(&oldargs), freearg(&oldpath), freearg(&newpath);
