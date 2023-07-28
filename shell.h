@@ -16,7 +16,7 @@ extern char **environ;
 typedef struct builtin
 {
 	char *name;
-	void (*func)(char **);
+	void (*func)(char **, int *);
 } builtin;
 
 /* string_functions.c */
@@ -32,11 +32,11 @@ char *_isExist(char *command, int *status);
 void _replace_cmd(char **argv);
 
 /* builtin.c */
-void __exit(char **argv);
-void _env(char **argv);
-void _setenv(char **argv);
-void _unsetenv(char **argv);
-void (*checkbuild(char **arv))(char **arv);
+void __exit(char **argv, int *status);
+void _env(char **argv, int *status);
+void _setenv(char **argv, int *status);
+void _unsetenv(char **argv, int *status);
+void (*checkbuild(char **arv))(char **arv, int *status);
 
 /* main.c */
 void _handleCtrlC(int sig_num);

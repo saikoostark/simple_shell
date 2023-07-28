@@ -89,7 +89,7 @@ int main(int argc, char const *argv[], char **envp)
 	size_t size = 0;
 	FILE *filrdr = NULL;
 	int isfilrdr = 0, pid = 0, atty = 0, status = 0;
-	void (*builtin)(char **);
+	void (*builtin)(char **, int *);
 
 	environ = envp;
 	signal(SIGINT, _handleCtrlC);
@@ -115,12 +115,12 @@ int main(int argc, char const *argv[], char **envp)
 					printf("%s: No such file or directory\n", args[0]);
 					return (2);
 				}
-				else
-					waitpid(pid, &status, 0);
+				waitpid(pid, &status, 0);
+				status = WEXITSTATUS(status);
 			}
 		}
 		else if (builtin != NULL)
-			builtin(args);
+			builtin(args, &status);
 		freearg(&path);
 		freeargs(&args);
 	}

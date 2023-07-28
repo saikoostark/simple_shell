@@ -3,8 +3,9 @@
 /**
  * __exit - function
  * @argv: function arg
+ * @status: function arg
  */
-void __exit(char **argv)
+void __exit(char **argv, int *status)
 {
 	int i, n;
 
@@ -24,17 +25,19 @@ void __exit(char **argv)
 	for (i = 0; argv[i]; i++)
 		free(argv[i]);
 	free(argv);
-	exit(EXIT_SUCCESS);
+	exit(*status);
 }
 
 /**
  * _env - function
  * @argv: function arg
+ * @status: function arg
  */
-void _env(char **argv)
+void _env(char **argv, int *status)
 {
 	int i;
 	(void)argv;
+	(void)status;
 
 	for (i = 0; environ[i]; i++)
 	{
@@ -45,10 +48,12 @@ void _env(char **argv)
 /**
  * _setenv - function
  * @argv: function arg
+ * @status: function arg
  */
-void _setenv(char **argv)
+void _setenv(char **argv, int *status)
 {
 	int i, j, k;
+	(void)status;
 
 	if (!argv[1] || !argv[2])
 	{
@@ -92,10 +97,12 @@ void _setenv(char **argv)
 /**
  * _unsetenv - function
  * @argv: function arg
+ * @status: function arg
  */
-void _unsetenv(char **argv)
+void _unsetenv(char **argv, int *status)
 {
 	int i, j;
+	(void)status;
 
 	if (!argv[1])
 	{
@@ -134,7 +141,7 @@ void _unsetenv(char **argv)
  * @arv: function arg
  * Return: Always 0 (Success)
  */
-void (*checkbuild(char **arv))(char **arv)
+void (*checkbuild(char **arv))(char **arv, int *status)
 {
 	int i, j;
 	builtin T[] = {
