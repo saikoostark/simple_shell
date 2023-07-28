@@ -7,28 +7,19 @@
  */
 char *_getenv(const char *name)
 {
-	int i, j;
+	int i;
 	char *value;
-
+	/* printf("name is > %s\n", name); */
 	if (!name)
 		return (NULL);
 	for (i = 0; environ[i]; i++)
 	{
-		j = 0;
-		if (name[j] == environ[i][j])
-		{
-			while (name[j])
-			{
-				if (name[j] != environ[i][j])
-					break;
 
-				j++;
-			}
-			if (name[j] == '\0')
-			{
-				value = (environ[i] + j + 1);
-				return (value);
-			}
+		if (strnncmp(name, environ[i], '\0', '='))
+		{
+			/* printf("%s <=> %s", name, environ[i]); */
+			value = (environ[i] + strlen(name) + 1);
+			return (value);
 		}
 	}
 	return (NULL);
@@ -39,18 +30,25 @@ char *_getenv(const char *name)
  * @command: function arg
  * Return: Always 0 (Success)
  */
-char *_isExist(char *command)
+char *_isExist(char *command, int *status)
 {
 
 	char **paths;
 	size_t lenpaths;
-	char *fullpath;
+	char *fullpath, *pathenv;
 	size_t i;
 
 	if (access(command, F_OK) != -1)
 	{
-
 		return (strdup(command));
+	}
+	pathenv = _getenv("PATH");
+
+	if (pathenv == NULL || strlen(pathenv) == 0)
+	{
+		fprintf(stderr, "%s: 1: %s: not found\n", _getenv("_"), command);
+		*status = 127;
+		return (NULL);
 	}
 
 	paths = _split_string(_getenv("PATH"), ":", &lenpaths);
@@ -67,7 +65,8 @@ char *_isExist(char *command)
 	}
 
 	freeargs(&paths);
-	printf("%s: No such file or directory\n", command);
+	fprintf(stderr, "%s: 1: %s: not found\n", _getenv("_"), command);
+	*status = 127;
 	return (NULL);
 }
 

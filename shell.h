@@ -13,7 +13,6 @@
 #include <ctype.h>
 
 extern char **environ;
-
 typedef struct builtin
 {
 	char *name;
@@ -29,7 +28,7 @@ char *_strtok(char *str, const char *delimiters);
 
 /* path_linker.c */
 char *_getenv(const char *name);
-char *_isExist(char *command);
+char *_isExist(char *command, int *status);
 void _replace_cmd(char **argv);
 
 /* builtin.c */
@@ -42,7 +41,7 @@ void (*checkbuild(char **arv))(char **arv);
 /* main.c */
 void _handleCtrlC(int sig_num);
 void _readingInput(int argc, char const *argv[], char **str, size_t *size,
-				   FILE **filereader, int *isFileReader, int atty);
+				   FILE **filereader, int *isFileReader, int atty, int *status);
 char **_argsHandler(char **str, size_t *size);
 
 /* memory.c */
@@ -52,4 +51,6 @@ void freeargs(char ***argv);
 /* helper.c */
 void errorfork(int pid);
 void checkfreespaces(char **str);
+size_t strlendel(const char *str, char del);
+int strnncmp(const char *str1, const char *str2, char del1, char del2);
 #endif
