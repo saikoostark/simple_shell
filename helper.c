@@ -34,6 +34,7 @@ void checkfreespaces(char **str)
  * strlendel - function
  * @str: function arg
  * @del: function arg
+ * Return: Always 0 (Success)
  */
 size_t strlendel(const char *str, char del)
 {

@@ -28,6 +28,7 @@ char *_getenv(const char *name)
 /**
  * _isExist - function
  * @command: function arg
+ * @status: function arg
  * Return: Always 0 (Success)
  */
 char *_isExist(char *command, int *status)

@@ -16,12 +16,14 @@ void _handleCtrlC(int sig_num)
  * @argv: function arg
  * @str: function arg
  * @size: function arg
- * @filereader: function arg
- * @isFileReader: function arg
+ * @filrdr: function arg
+ * @isfilrdr: function arg
+ * @status: function arg
  * @atty: function arg
  */
 void _readingInput(int argc, char const *argv[], char **str, size_t *size,
-				   FILE **filereader, int *isFileReader, int atty, int *status)
+				   FILE **filrdr, int *isfilrdr,
+				   int atty, int *status)
 {
 	ssize_t reads;
 
@@ -37,19 +39,19 @@ void _readingInput(int argc, char const *argv[], char **str, size_t *size,
 	}
 	else if (argc == 2)
 	{
-		if (*isFileReader == 0)
+		if (*isfilrdr == 0)
 		{
-			*filereader = fopen(argv[1], "r");
-			if (filereader == NULL)
+			*filrdr = fopen(argv[1], "r");
+			if (filrdr == NULL)
 				exit(1);
-			*isFileReader = 1;
+			*isfilrdr = 1;
 		}
-		reads = getline(str, size, *filereader);
+		reads = getline(str, size, *filrdr);
 	}
 	if (reads == -1)
 	{
-		if (*filereader != NULL)
-			fclose(*filereader);
+		if (*filrdr != NULL)
+			fclose(*filrdr);
 		exit(*status);
 	}
 	if ((*str)[strlen(*str) - 1] == '\n')
@@ -85,8 +87,8 @@ int main(int argc, char const *argv[], char **envp)
 {
 	char *str = NULL, *path = NULL, **args = NULL;
 	size_t size = 0;
-	FILE *filereader = NULL;
-	int isFileReader = 0, pid = 0, atty = 0, status = 0;
+	FILE *filrdr = NULL;
+	int isfilrdr = 0, pid = 0, atty = 0, status = 0;
 	void (*builtin)(char **);
 
 	environ = envp;
@@ -94,7 +96,7 @@ int main(int argc, char const *argv[], char **envp)
 	atty = isatty(STDIN_FILENO);
 	while (1)
 	{
-		_readingInput(argc, argv, &str, &size, &filereader, &isFileReader, atty, &status);
+		_readingInput(argc, argv, &str, &size, &filrdr, &isfilrdr, atty, &status);
 		if (str == NULL || strlen(str) == 0)
 			continue;
 		args = _argsHandler(&str, &size);
