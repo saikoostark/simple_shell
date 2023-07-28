@@ -43,7 +43,7 @@ void _readingInput(int argc, char const *argv[], char **str, size_t *size,
 				fprintf(stderr, "%s: 0: cannot open %s: No such file\n", argv[0], argv[1]);
 				freearg(str);
 				freeargs(&environ);
-				exit(2);
+				exit(127);
 			}
 			*isfilrdr = 1;
 		}
