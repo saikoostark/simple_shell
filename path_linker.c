@@ -74,12 +74,13 @@ char *_isExist(char *command, int *status)
 /**
  * _replace_cmd - function
  * @argv: function arg
+ * @status: function arg
  */
-void _replace_cmd(char **argv)
+void _replace_cmd(char **argv, int *status)
 {
 	int i;
 	size_t strlength;
-	char *pid_str, *temp;
+	char *pid_str, *temp, buffer[15];
 
 	for (i = 0; argv[i]; i++)
 	{
@@ -98,7 +99,8 @@ void _replace_cmd(char **argv)
 				else if (argv[i][1] == '?')
 				{
 					freearg(&argv[i]);
-					argv[i] = strdup("0");
+					sprintf(buffer, "%d", *status);
+					argv[i] = strdup(buffer);
 				}
 				else
 				{

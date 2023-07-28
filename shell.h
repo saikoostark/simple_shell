@@ -29,7 +29,7 @@ char *_strtok(char *str, const char *delimiters);
 /* path_linker.c */
 char *_getenv(const char *name);
 char *_isExist(char *command, int *status);
-void _replace_cmd(char **argv);
+void _replace_cmd(char **argv, int *status);
 
 /* builtin.c */
 void __exit(char **argv, int *status, char *name);
@@ -42,7 +42,7 @@ void (*checkbuild(char **arv))(char **arv, int *status, char *name);
 void _handleCtrlC(int sig_num);
 void _readingInput(int argc, char const *argv[], char **str, size_t *size,
 				   FILE **filereader, int *isFileReader, int atty, int *status);
-char **_argsHandler(char **str, size_t *size);
+char **_argsHandler(char **str, size_t *size, int *status);
 
 /* memory.c */
 void freearg(char **arg);

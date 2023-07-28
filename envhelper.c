@@ -9,6 +9,7 @@ char **envloader(char **envp)
 {
 	size_t size = 0, i = 0;
 	char **new_envp;
+
 	while (envp[size++])
 	{
 	}

@@ -67,9 +67,10 @@ void _readingInput(int argc, char const *argv[], char **str, size_t *size,
  * _argsHandler - function
  * @str: function arg
  * @size: function arg
+ * @status: function arg
  * Return: Always 0 (Success)
  */
-char **_argsHandler(char **str, size_t *size)
+char **_argsHandler(char **str, size_t *size, int *status)
 {
 	char **args = NULL;
 
@@ -78,7 +79,7 @@ char **_argsHandler(char **str, size_t *size)
 	_remove_comment(&args);
 
 	if (args)
-		_replace_cmd(args);
+		_replace_cmd(args, status);
 	return (args);
 }
 
@@ -103,7 +104,7 @@ int main(int argc, char const *argv[], char **envp)
 		_readingInput(argc, argv, &str, &size, &filrdr, &isfilrdr, atty, &status);
 		if (str == NULL || strlen(str) == 0)
 			continue;
-		args = _argsHandler(&str, &size);
+		args = _argsHandler(&str, &size, &status);
 		freearg(&str);
 		if (args == NULL)
 			continue;
