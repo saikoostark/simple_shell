@@ -8,7 +8,6 @@
  */
 void _cd(char **argv, int *status, char *name)
 {
-
 	char *oldpath = NULL, *newpath = NULL, **oldargs = NULL,
 		 **newargs = NULL, *tmp;
 	size_t size = 1024;
@@ -24,19 +23,11 @@ void _cd(char **argv, int *status, char *name)
 	else
 	{
 		if (strcmp(argv[1], (char *)"-") == 0)
-		{
-			tmp = _getenv("OOLDPWD");
-			if (tmp != NULL)
-				newpath = strdup(tmp);
-			else
-				newpath = NULL;
-		}
+			tmp = _getenv("OOLDPWD"), newpath = (tmp != NULL) ? strdup(tmp) : NULL;
 		else
 			newpath = strdup(argv[1]);
 	}
 	oldpath = strdup(_getenv("PWD"));
-	if (newpath == NULL)
-		return;
 	if (newpath != NULL && chdir(newpath) == 0)
 	{
 		freearg(&newpath), newpath = malloc(1024), getcwd(newpath, size);
@@ -50,7 +41,7 @@ void _cd(char **argv, int *status, char *name)
 		_setenv(oldargs, status, name), _setenv(newargs, status, name);
 		freeargs(&newargs), freeargs(&oldargs), freearg(&oldpath), freearg(&newpath);
 	}
-	else
+	else if (newpath != NULL)
 	{
 		fprintf(stderr, "%s: 1: cd: can't cd to %s\n", name, newpath);
 		freearg(&oldpath), freearg(&newpath);
