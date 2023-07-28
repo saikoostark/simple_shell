@@ -21,11 +21,13 @@ void __exit(char **argv, int *status, char *name)
 		for (i = 0; argv[i]; i++)
 			free(argv[i]);
 		free(argv);
+		freeargs(&environ);
 		exit(n);
 	}
 	for (i = 0; argv[i]; i++)
 		free(argv[i]);
 	free(argv);
+	freeargs(&environ);
 	exit(*status);
 }
 
@@ -92,6 +94,7 @@ void _setenv(char **argv, int *status, char *name)
 	}
 	if (!environ[i])
 	{
+		environ = realloc(environ, (i + 2) * sizeof(char *));
 		environ[i] = _concat_all(argv[1], "=", argv[2]);
 		environ[i + 1] = '\0';
 	}

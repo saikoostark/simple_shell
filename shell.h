@@ -54,4 +54,7 @@ void checkfreespaces(char **str);
 size_t strlendel(const char *str, char del);
 int strnncmp(const char *str1, const char *str2, char del1, char del2);
 
+/* envhelper.c */
+char **envloader(char **envp);
+
 #endif

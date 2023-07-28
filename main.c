@@ -52,6 +52,7 @@ void _readingInput(int argc, char const *argv[], char **str, size_t *size,
 	{
 		if (*filrdr != NULL)
 			fclose(*filrdr);
+		freeargs(&environ);
 		exit(*status);
 	}
 	if ((*str)[strlen(*str) - 1] == '\n')
@@ -93,7 +94,7 @@ int main(int argc, char const *argv[], char **envp)
 	int isfilrdr = 0, pid = 0, atty = isatty(STDIN_FILENO), status = 0;
 	void (*builtin)(char **, int *, char *);
 
-	environ = envp;
+	environ = envloader(envp);
 	while (1)
 	{
 		_readingInput(argc, argv, &str, &size, &filrdr, &isfilrdr, atty, &status);
@@ -114,7 +115,6 @@ int main(int argc, char const *argv[], char **envp)
 				if (pid == 0)
 				{
 					execve(path, args, environ);
-					printf("%s: No such file or directory\n", args[0]);
 					return (2);
 				}
 				waitpid(pid, &status, 0);
@@ -126,5 +126,6 @@ int main(int argc, char const *argv[], char **envp)
 		freearg(&path);
 		freeargs(&args);
 	}
+	freeargs(&environ);
 	return (WEXITSTATUS(status));
 }
