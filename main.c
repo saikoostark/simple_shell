@@ -89,7 +89,7 @@ int main(int argc, char const *argv[], char **envp)
 	size_t size = 0;
 	FILE *filrdr = NULL;
 	int isfilrdr = 0, pid = 0, atty = 0, status = 0;
-	void (*builtin)(char **, int *);
+	void (*builtin)(char **, int *, char *);
 
 	environ = envp;
 	signal(SIGINT, _handleCtrlC);
@@ -120,7 +120,7 @@ int main(int argc, char const *argv[], char **envp)
 			}
 		}
 		else if (builtin != NULL)
-			builtin(args, &status);
+			builtin(args, &status, (char *)argv[0]);
 		freearg(&path);
 		freeargs(&args);
 	}

@@ -5,7 +5,7 @@
  * @argv: function arg
  * @status: function arg
  */
-void __exit(char **argv, int *status)
+void __exit(char **argv, int *status, char *name)
 {
 	int i, n;
 
@@ -14,7 +14,7 @@ void __exit(char **argv, int *status)
 		n = atoi(argv[1]);
 		if (n <= -1 || !isdigit(argv[1][0]))
 		{
-			fprintf(stderr, "%s: 1: exit: Illegal number: %s\n", _getenv("_"), argv[1]);
+			fprintf(stderr, "%s: 1: exit: Illegal number: %s\n", name, argv[1]);
 			n = 2;
 		}
 		for (i = 0; argv[i]; i++)
@@ -33,11 +33,12 @@ void __exit(char **argv, int *status)
  * @argv: function arg
  * @status: function arg
  */
-void _env(char **argv, int *status)
+void _env(char **argv, int *status, char *name)
 {
 	int i;
 	(void)argv;
 	(void)status;
+	(void)name;
 
 	for (i = 0; environ[i]; i++)
 	{
@@ -50,10 +51,11 @@ void _env(char **argv, int *status)
  * @argv: function arg
  * @status: function arg
  */
-void _setenv(char **argv, int *status)
+void _setenv(char **argv, int *status, char *name)
 {
 	int i, j, k;
 	(void)status;
+	(void)name;
 
 	if (!argv[1] || !argv[2])
 	{
@@ -99,10 +101,11 @@ void _setenv(char **argv, int *status)
  * @argv: function arg
  * @status: function arg
  */
-void _unsetenv(char **argv, int *status)
+void _unsetenv(char **argv, int *status, char *name)
 {
 	int i, j;
 	(void)status;
+	(void)name;
 
 	if (!argv[1])
 	{
@@ -141,7 +144,7 @@ void _unsetenv(char **argv, int *status)
  * @arv: function arg
  * Return: Always 0 (Success)
  */
-void (*checkbuild(char **arv))(char **arv, int *status)
+void (*checkbuild(char **arv))(char **arv, int *status, char *name)
 {
 	int i, j;
 	builtin T[] = {
